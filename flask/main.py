@@ -32,12 +32,26 @@ def index():
 
 @app.route('/rainfall')
 def rainfall():
-    return render_template('rainfall.html')
+    image_base64 = create_graph({"field": "RH", "data_type": DataType.CUMULATIVE, "y_label": "Total rainfall"})
+
+    # render the HTML template with the plot image
+    return render_template('rainfall.html', image_base64=image_base64)
 
 
 @app.route('/sunhours')
 def sunhours():
-    return render_template('sunhours.html')
+    image_base64 = create_graph({"field": "SQ", "data_type": DataType.CUMULATIVE, "y_label": "Total sun hours"})
+
+    # render the HTML template with the plot image
+    return render_template('sunhours.html', image_base64=image_base64)
+
+
+@app.route('/temperature')
+def temperature():
+    image_base64 = create_graph({"field": "TX", "data_type": DataType.AVERAGE, "y_label": "Average temperature"})
+
+    # render the HTML template with the plot image
+    return render_template('temperature.html', image_base64=image_base64)
 
 
 @app.route('/hello_world')
@@ -132,7 +146,11 @@ def create_graph(data_config):
     ax.set_ylabel(data_config["y_label"], fontsize=16)
     ax.tick_params(labelsize=16)
 
-    return fig, ax
+    # encode the plot image as a base64 string
+    buffer = io.BytesIO()
+    fig.savefig(buffer, format='png')
+    buffer.seek(0)
+    return base64.b64encode(buffer.getvalue()).decode('utf-8').replace('\n', '')
 
 
 if __name__ == '__main__':
