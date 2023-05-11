@@ -26,6 +26,7 @@ def create_app(configfile=None):
     # http://flask.pocoo.org/docs/patterns/appfactories/
 
     app = Flask(__name__)
+    app.config.from_pyfile('instance/config.py')
 
     # We use Flask-Appconfig here, but this is not a requirement
     AppConfig(app)

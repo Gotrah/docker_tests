@@ -5,7 +5,7 @@
 # You can find out more about blueprints at
 # http://flask.pocoo.org/docs/blueprints/
 
-from flask import Blueprint, render_template, flash, redirect, url_for
+from flask import Blueprint, render_template, session
 from flask_bootstrap import __version__ as FLASK_BOOTSTRAP_VERSION
 from flask_nav.elements import Navbar, View, Subgroup, Link, Text, Separator
 from markupsafe import escape
@@ -35,6 +35,8 @@ def index():
 
 @frontend.route('/rainfall')
 def rainfall():
+    session['counter'] = session.get('counter', 0) + 1
+    print("Session counter: " + str(session['counter']))
     weather_data = WeatherData(WeatherData.DataType.CUMULATIVE, "RH", "Total rainfall")
     image_base64 = weather_data.create_graph()
 
@@ -44,6 +46,8 @@ def rainfall():
 
 @frontend.route('/sun_hours')
 def sun_hours():
+    session['counter'] = session.get('counter', 0) + 1
+    print("Session counter: " + str(session['counter']))
     weather_data = WeatherData(WeatherData.DataType.CUMULATIVE, "SQ", "Sun Hours")
     image_base64 = weather_data.create_graph()
 
@@ -53,6 +57,8 @@ def sun_hours():
 
 @frontend.route('/temperature')
 def temperature():
+    session['counter'] = session.get('counter', 0) + 1
+    print("Session counter: " + str(session['counter']))
     weather_data = WeatherData(WeatherData.DataType.AVERAGE, "TX", "Average Temperature")
     image_base64 = weather_data.create_graph()
 
