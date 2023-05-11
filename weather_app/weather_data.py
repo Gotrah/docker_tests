@@ -10,10 +10,10 @@ import matplotlib
 import matplotlib.pyplot as plt
 import base64
 
-from copy import deepcopy
 
-# matplotlib.use('agg')
-#
+matplotlib.use('agg')
+
+
 class WeatherData:
 
     def __init__(self, data_type, field, y_label):
@@ -26,7 +26,7 @@ class WeatherData:
 
     @staticmethod
     def open_file():
-        path = Path('weather_data/etmgeg_260.txt')
+        path = Path('weather_app/weather_data/etmgeg_260.txt')
         lines = path.read_text().splitlines()
         return csv.reader(lines)
 

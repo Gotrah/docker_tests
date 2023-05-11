@@ -6,7 +6,7 @@ import csv
 from datetime import datetime
 from copy import deepcopy
 from enum import Enum
-from flask import Flask, render_template
+from weather_app import Blueprint, render_template
 from flask_bootstrap import Bootstrap
 
 import matplotlib
@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import base64
 
 from weather_data import WeatherData
+from .nav import nav
 
 # matplotlib.use('Agg')
 
