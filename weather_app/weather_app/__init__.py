@@ -13,11 +13,9 @@
 # source.
 
 from flask import Flask
-# from flask_appconfig import AppConfig
 from flask_bootstrap import Bootstrap
 
 from .frontend import frontend
-# from .nav import nav
 
 
 def create_app(configfile=None):
@@ -27,9 +25,6 @@ def create_app(configfile=None):
 
     app = Flask(__name__)
     app.config.from_pyfile('../instance/config.py')
-
-    # We use Flask-Appconfig here, but this is not a requirement
-    # AppConfig(app)
 
     # Install our Bootstrap extension
     Bootstrap(app)
@@ -43,7 +38,7 @@ def create_app(configfile=None):
     # the CDN support (this might become a default in later versions):
     app.config['BOOTSTRAP_SERVE_LOCAL'] = True
 
-    # We initialize the navigation as well
-    # nav.init_app(app)
-
     return app
+
+
+app = create_app()

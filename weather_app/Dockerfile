@@ -19,4 +19,6 @@ COPY . .
 
 EXPOSE 5000
 
+#ENV FLASK_APP=run_weather_app.py
+#CMD ["flask", "run", "--host", "0.0.0.0"]
 CMD ["python", "run_weather_app.py"]

@@ -8,9 +8,10 @@ import sys
 
 from weather_app import create_app
 
-sys.path.append(os.path.dirname(__name__))
 
-# create an app instance
-app = create_app()
+if __name__ == "__main__":
+    sys.path.append(os.path.dirname(__name__))
 
-app.run(host="0.0.0.0", debug=False)
+    # create an app instance
+    app = create_app()
+    app.run(host="0.0.0.0")
