@@ -82,6 +82,7 @@ class WeatherData:
 
         header_found = False
         counter = 0
+        # Go through lines until an empty row is found. The next row is the header row.
         while not header_found and counter < 100:
             current_row = next(reader)
             if not current_row:
@@ -89,13 +90,9 @@ class WeatherData:
             counter += 1
 
         header_row = next(reader)
-
-        columns = {}
-
-        for index, column_header in enumerate(header_row):
-            columns[column_header.strip()] = index
-
         next(reader)
+
+        columns = {column_header.strip(): index for index, column_header in enumerate(header_row)}
 
         self.columns = columns
         self.reader = reader
