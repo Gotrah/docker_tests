@@ -19,4 +19,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["python", "main.py"]
+CMD ["python", "run_weather_app.py"]
