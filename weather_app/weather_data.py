@@ -1,6 +1,9 @@
 import csv
 import io
+import os
 from pathlib import Path
+import urllib.request
+import zipfile
 
 from datetime import datetime
 
@@ -15,6 +18,9 @@ matplotlib.use('agg')
 
 
 class WeatherData:
+    WEATHER_DATA_DIR = "weather_app/weather_data/"
+    WEATHER_DATA_FILE = "etmgeg_240.txt"
+    WEATHER_DATA_URL = "https://cdn.knmi.nl/knmi/map/page/klimatologie/gegevens/daggegevens/etmgeg_240.zip"
 
     def __init__(self, data_type, field, y_label):
         self.data_type = data_type
@@ -26,9 +32,50 @@ class WeatherData:
 
     @staticmethod
     def open_file():
-        path = Path('weather_app/weather_data/etmgeg_260.txt')
+        path = Path(os.path.join(WeatherData.WEATHER_DATA_DIR, WeatherData.WEATHER_DATA_FILE))
+
+        if not WeatherData.check_file_updated():
+            WeatherData.download_weather_data()
+
         lines = path.read_text().splitlines()
         return csv.reader(lines)
+
+    @staticmethod
+    def check_file_updated():
+        """Check if the file has been updated today."""
+        try:
+            modified_timestamp = os.path.getmtime("weather_app/weather_data/etmgeg_240.txt")
+            modified_date = datetime.fromtimestamp(modified_timestamp).date()
+            if modified_date < datetime.now().date():
+                return False
+            else:
+                return True
+        except FileNotFoundError as e:
+            return False
+
+    @staticmethod
+    def download_weather_data():
+        """Download the file from the given url, extract it and remove the zip file."""
+        try:
+            filename = os.path.basename(WeatherData.WEATHER_DATA_URL)
+            save_path = os.path.join(WeatherData.WEATHER_DATA_DIR, filename)
+            urllib.request.urlretrieve(WeatherData.WEATHER_DATA_URL, save_path)
+            print(f"File downloaded successfully from url {WeatherData.WEATHER_DATA_URL}.")
+
+            with zipfile.ZipFile(save_path, 'r') as zip_ref:
+                zip_ref.extractall(WeatherData.WEATHER_DATA_DIR)
+
+            os.remove(save_path)
+            print("Done downloading and extracting.")
+
+        except urllib.error.URLError as e:
+            print("An error occurred while downloading the file:", e)
+        except FileNotFoundError as e:
+            print("The specified directory does not exist:", e)
+        except PermissionError as e:
+            print("Permission denied for the specified directory:", e)
+        except ValueError as e:
+            print("Invalid URL provided:", e)
 
     def read_txt_file(self):
         reader = self.open_file()
