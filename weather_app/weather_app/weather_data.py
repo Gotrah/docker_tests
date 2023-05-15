@@ -37,7 +37,12 @@ class WeatherData:
         if not WeatherData.check_file_updated():
             WeatherData.download_weather_data()
 
-        lines = path.read_text().splitlines()
+        try:
+            lines = path.read_text().splitlines()
+        except FileNotFoundError as e:
+            print("File not found:", e)
+            exit()
+
         return csv.reader(lines)
 
     @staticmethod
@@ -72,6 +77,7 @@ class WeatherData:
             print("An error occurred while downloading the file:", e)
         except FileNotFoundError as e:
             print("The specified directory does not exist:", e)
+            print("Currently it is:", os.getcwd())
         except PermissionError as e:
             print("Permission denied for the specified directory:", e)
         except ValueError as e:

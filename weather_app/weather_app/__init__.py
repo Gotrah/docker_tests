@@ -13,11 +13,11 @@
 # source.
 
 from flask import Flask
-from flask_appconfig import AppConfig
+# from flask_appconfig import AppConfig
 from flask_bootstrap import Bootstrap
 
 from .frontend import frontend
-from .nav import nav
+# from .nav import nav
 
 
 def create_app(configfile=None):
@@ -26,10 +26,10 @@ def create_app(configfile=None):
     # http://flask.pocoo.org/docs/patterns/appfactories/
 
     app = Flask(__name__)
-    app.config.from_pyfile('instance/config.py')
+    app.config.from_pyfile('../instance/config.py')
 
     # We use Flask-Appconfig here, but this is not a requirement
-    AppConfig(app)
+    # AppConfig(app)
 
     # Install our Bootstrap extension
     Bootstrap(app)
@@ -44,6 +44,6 @@ def create_app(configfile=None):
     app.config['BOOTSTRAP_SERVE_LOCAL'] = True
 
     # We initialize the navigation as well
-    nav.init_app(app)
+    # nav.init_app(app)
 
     return app

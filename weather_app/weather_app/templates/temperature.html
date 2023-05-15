@@ -9,6 +9,7 @@
    This will keep scripts at the page end and a navbar you add on later
    intact. #}
 {% block content %}
+  {% include "navbar.html" %}
   <div class="container">
   {%- with messages = get_flashed_messages(with_categories=True) %}
   {%- if messages %}
@@ -20,7 +21,7 @@
   {%- endif %}
   {%- endwith %}
     <div class="jumbotron">
-      <h1>Sun Hours</h1>
+      <h1>Temperature</h1>
       <img src="data:image/png;base64,{{ image_base64 }}" />
     </div>
    </div>

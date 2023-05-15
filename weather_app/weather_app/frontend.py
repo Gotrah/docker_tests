@@ -7,23 +7,23 @@
 
 from flask import Blueprint, render_template, session
 from flask_bootstrap import __version__ as FLASK_BOOTSTRAP_VERSION
-from flask_nav.elements import Navbar, View, Subgroup, Link, Text, Separator
+# from flask_nav.elements import Navbar, View, Subgroup, Link, Text, Separator
 from markupsafe import escape
 
 from .weather_data import WeatherData
-from .nav import nav
+# from .nav import nav
 
 frontend = Blueprint('frontend', __name__)
 
 # We're adding a navbar as well through weather_app-navbar. In our example, the
 # navbar has an usual amount of Link-Elements, more commonly you will have a
 # lot more View instances.
-nav.register_element('frontend_top', Navbar(
-    View('Home', '.index'),
-    View('Rainfall', '.rainfall'),
-    View('Sun Hours', '.sun_hours'),
-    View('Temperature', '.temperature'),
-))
+# nav.register_element('frontend_top', Navbar(
+#     View('Home', '.index'),
+#     View('Rainfall', '.rainfall'),
+#     View('Sun Hours', '.sun_hours'),
+#     View('Temperature', '.temperature'),
+# ))
 
 
 # Our index-page just shows a quick explanation. Check out the template
