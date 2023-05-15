@@ -13,4 +13,4 @@ sys.path.append(os.path.dirname(__name__))
 # create an app instance
 app = create_app()
 
-app.run(host="0.0.0.0", debug=True)
+app.run(host="0.0.0.0", debug=False)
